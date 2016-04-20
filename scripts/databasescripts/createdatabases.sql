@@ -70,3 +70,10 @@ CREATE TABLE messages (
     content TEXT NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE loginnonces (
+    id int NOT NULL AUTO_INCREMENT,
+    username VARCHAR(32) NOT NULL,
+    nonce int NOT NULL,
+    PRIMARY KEY (id)
+);
