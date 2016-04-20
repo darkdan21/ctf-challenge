@@ -27,12 +27,12 @@ class forum{
         $query = "INSERT INTO forums (name) VALUES ('$this->name')";
         do_query($query);
         $this->id = get_last_id();
-
     }
 }
 
-$forum = new forum();
-$forum->create_forum("hiya");
+$board = new board();
+
+var_dump($board->get_forums());
 
 function do_query($query){
     $result = $GLOBALS['link']->query($query) or die($GLOBALS['link']->error);
