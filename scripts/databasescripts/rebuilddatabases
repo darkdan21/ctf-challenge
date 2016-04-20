@@ -1,0 +1,4 @@
+#!/bin/bash
+
+$(mysql -u root -pcheese12345 < dropdatabases.sql)
+$(mysql -u root -pcheese12345 < createdatabases.sql)
