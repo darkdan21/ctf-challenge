@@ -15,9 +15,9 @@ class registration {
 
     function doregistration(){
         if($this->username != "" && $this->email != "" && $this->password != ""){
-            $username = $this->link->real_escape_string($this->username);
-            $email = $this->link->real_escape_string($this->email);
-            $password = $this->link->real_escape_string($this->password);
+            $username = htmlentities($this->link->real_escape_string($this->username));
+            $email = htmlentities($this->link->real_escape_string($this->email));
+            $password = htmlentities($this->link->real_escape_string($this->password));
 
             $token = $this->random_string();
 
@@ -42,7 +42,7 @@ class registration {
     }
 
     function username($username){
-        $username = $this->link->real_escape_string($username);
+        $username = htmlentities($this->link->real_escape_string($username));
         $query = "SELECT * FROM users WHERE username ='$username'";
 
         $result = $this->link->query($query) or die($this->link->error);
@@ -56,7 +56,7 @@ class registration {
     }
 
     function email($email){
-        $email = $this->link->real_escape_string($email);
+        $email = htmlentities($this->link->real_escape_string($email));
         $query = "SELECT * FROM users WHERE email ='$email'";
 
         $result = $this->link->query($query) or die($this->link->error);
@@ -75,7 +75,7 @@ class registration {
             return false;
         }
 
-        $this->password = $this->link->real_escape_string($password);
+        $this->password = htmlentities($this->link->real_escape_string($password));
 
         return True;
     }

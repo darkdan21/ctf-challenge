@@ -120,7 +120,7 @@ function do_query($query){
 }
 
 function escape($string){
-    return htmlspecialchars($GLOBALS['link']->real_escape_string($string));
+    return htmlentities($GLOBALS['link']->real_escape_string($string));
 }
 
 function get_last_id(){
