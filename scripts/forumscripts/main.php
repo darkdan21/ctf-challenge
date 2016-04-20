@@ -67,7 +67,7 @@ class thread{
 
     function reply($userid, $content){
         $post = new post();
-        $post->new_post($userid,$this->threadid,$content);
+        $post->new_post($userid,$this->id,$content);
     }
     function list_posts(){
         $query = "SELECT group_concat(id) FROM posts WHERE threadid = '$this->id'";
@@ -85,11 +85,13 @@ class post{
     public $date;
     public $content;
 
-    function get_thread($id){
+    function get_post($id){
+
         $this->id = escape($id);
 
         $query = "SELECT userid,threadid,date,content FROM posts WHERE id='$this->id'";
         $result = do_query($query)->fetch_array();
+
 
         $this->userid = $result[0];
         $this->threadid = $result[1];
@@ -104,6 +106,8 @@ class post{
         $this->content = nl2br(escape($content));
 
         $query = "INSERT INTO posts (userid,threadid,date,content) VALUES ('$this->userid','$this->threadid','$this->date','$this->content')";
+
+        do_query($query);
     }
 
 } 
@@ -126,4 +130,9 @@ function get_last_id(){
 function get_date(){
     return date("H:i:s d/m/Y");
 }
+
+$post = new post();
+$post->get_post(1);
+
+var_dump($post);
 ?>
