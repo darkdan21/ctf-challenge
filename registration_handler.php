@@ -1,6 +1,5 @@
 <?php
 include_once("scripts/forumscripts/registration.php");
-include_once("scripts/forumscripts/activation.php");
 
 $reg = new registration();
 if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['pass1']) && isset ($_POST['pass2'])) 
@@ -23,7 +22,6 @@ if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['pass1'])
 }
 
 function success(){
-    echo "Registration sucessful! Please activate your account.";
 
     $string ="state=success";
 
@@ -37,7 +35,7 @@ function failure($username,$email,$password){
 
     $string ="state=fail";
 
-    $string.= "&status=".($username*4 + $password*2 + $email);
+    $string.= "&status=".((1-$username)*4 + (1-$email)*2 + (1-$password));
 
     $string.="&username=".$_POST['username'];
 

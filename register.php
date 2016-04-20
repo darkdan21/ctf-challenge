@@ -3,7 +3,9 @@
 
 if(isset($_GET['state']) && $_GET['state'] == "success")
 {
-    echo "Registered succesfully, please activate your account here.";
+    echo "Registered succesfully, please check your emails for the registration key.<br>
+<br>
+ERROR: Email not sent, please go to the activation page and activate your account manually.";
 } else {
 
     $namerror = "";
