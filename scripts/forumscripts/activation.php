@@ -24,7 +24,7 @@ class activation{
         $id = $result[1];
 
 
-        if($active == 0){
+        if($active == 0 && $id!=0){
             $this->username = $username;
             $this->id = $id;
             return True;

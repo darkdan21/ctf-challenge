@@ -1,5 +1,7 @@
 <?php
 
+include_once("scripts/sessions/management.php");
+
 class registration {
 
 
@@ -34,6 +36,9 @@ class registration {
             $query = "INSERT INTO registration_keys (userid, token) VALUES ('$id','$token')";
 
             $result = $this->link->query($query) or die($this->link->error);
+
+            $session = new session();
+            $session->register($username);
 
             return True;
         }
