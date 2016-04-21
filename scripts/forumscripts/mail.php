@@ -71,15 +71,23 @@ class mailcheck{
     }
 
     function unread(){
-        $query = "SELECT group_concat(id) from messages WHERE toid='$this->id' AND seen='0'";
+        $query = "SELECT group_concat(id ORDER BY id DESC) from messages WHERE toid='$this->id' AND seen='0'";
 
         $result = do_query($query);
         $result = explode(",",$result->fetch_array()[0]);
         return $result;
     }
 
+    function read(){
+        $query = "SELECT group_concat(id ORDER BY id DESC) from messages WHERE toid='$this->id' AND seen='1'";
+
+        $result = do_query($query);
+        $result = explode(",",$result->fetch_array()[0]);
+        return $result;
+
+    }
     function get_all(){
-        $query = "SELECT group_concat(id) from messages WHERE toid='$this->id'";
+        $query = "SELECT group_concat(id ORDER BY id DESC) from messages WHERE toid='$this->id'";
 
         $result = do_query($query);
         $result = explode(",",$result->fetch_array()[0]);
