@@ -85,6 +85,7 @@ class session{
         $this->update_database();
         setcookie("username", $this->username, time() + (3*60*60), "/");
         setcookie("token", $this->token, time()+(3*60*60),"/");
+        $this->valid = $this->verify_session();
     }
 
     function register($user){

@@ -1,19 +1,21 @@
 <?php
 include_once("session.php");
-include_once("header.php");
 include_once("scripts/forumscripts/login.php");
-$GLOBALS['error'] = "";
+
 if(isset($_POST['username']) && isset($_POST['hashedpass'])){
     $login = new login($_POST['username']);
     $result = $login->login($_POST['hashedpass']);
+    if($result == 1){
+
+        $session->login($_POST['username']);
+    }   
+}
+include_once("header.php");
+$GLOBALS['error'] = "";
+if(isset($_POST['username']) && isset($_POST['hashedpass'])){
 
     if($result == 1){
-        if($session->valid != 1)
-        {
-            header("refresh:0");
-        }
-        echo "You have logged in sucessfully.";
-        $session->login($_POST['username']);
+        echo "<br>You have logged in sucessfully.";
     } else {
         $GLOBALS['error'] = "Login unsuccessful, please try again.";
         loginform($session);
