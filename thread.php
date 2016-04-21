@@ -41,7 +41,7 @@ if($thread->threadname == ""){
     echo "<br>Thread not found<br>";
     die();
 }
-echo "<br>Thread: ".$thread->threadname."<br>";
+echo "<br>Thread: ".$thread->threadname." - <a href=forum.php?forum=".$thread->forumid.">".((new forum())->get_forum($thread->forumid))->name."</a><br>";
 
 $post = new post();
 $postids = $thread->list_posts();

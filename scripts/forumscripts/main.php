@@ -19,6 +19,8 @@ class forum{
         $query = "SELECT name FROM forums WHERE id='$this->id'";
         $result = do_query1($query);
         $this->name = $result->fetch_array()[0];
+
+        return $this;
     }
     function create_forum($name){
         $this->name = escape1($name);
