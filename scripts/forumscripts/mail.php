@@ -84,7 +84,14 @@ class mailcheck{
         $result = do_query($query);
         $result = explode(",",$result->fetch_array()[0]);
         return $result;
+    }
 
+    function sent_count(){
+        $query = "SELECT id FROM messages WHERE fromid='$this->id'";
+
+        $result = do_query($query);
+
+        return $result->num_rows;
     }
 
     function unread_count(){

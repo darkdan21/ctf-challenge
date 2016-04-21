@@ -1,14 +1,17 @@
 <?php
+include_once("session.php");
+include_once("header.php");
+include_once("scripts/forumscripts/main.php");
 
-include_once("scripts/forumscripts/login.php");
+$board = new board();
 
-$mysqli = new mysqli("localhost", "root", "cheese12345", "forum");
+$forumids = $board->list_forums();
+echo "<br>Forums:<br>";
+$forum = new forum();
+foreach($forumids as $forumid){
+    $forum->get_forum($forumid);
 
+    echo "<a href=forum.php?forum=$forumid>$forum->name</a><br>";
+}
 
 ?>
-<script src = "hash.js">
-</script>
-
-<script>
-shufflehash("mouse",1);
-</script>

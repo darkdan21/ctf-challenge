@@ -3,21 +3,23 @@ include_once("scripts/forumscripts/mail.php");
 
 
 if($session->valid == 1){
-    echo "logged in";
     $mailcheck = new mailcheck(get_id_from_user($session->username));
     $unreadcount = $mailcheck->unread_count();
-    $mailtext = ($unreadcount == 0 ? "messages" : "messages[$unreadcount unread]");
+    $mailtext = ($unreadcount == 0 ? "Messages" : "Messages[$unreadcount unread]");
 ?>
-    <a href="logout.php">logout</a>
+    <a href="index.php">Index</a>
+    <a href="logout.php">Logout</a>
     <a href="messages.php"><?php echo $mailtext ?></a>
 <?php
+    echo " [Logged In]";
 } else {
-    echo "not logged in :(";
 ?>
-<a href="login.php">login</a>
-<a href="register.php">register</a>
-<a href="activation.php">activate</a>
+<a href="index.php">Index</a>
+<a href="login.php">Login</a>
+<a href="register.php">Register</a>
+<a href="activation.php">Activate</a>
 <?php
+    echo " [Logged Out]";
 }
 ?>
 

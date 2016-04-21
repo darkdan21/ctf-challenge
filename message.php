@@ -8,7 +8,7 @@ $mail = new message();
 $mail->get_message($_GET['id']);
 $messageid = $mail->toid;
 
-if($messageid == $userid)
+if($messageid == $userid && $session->valid==1)
 {
     if($_GET['action'] == "read")
     {
