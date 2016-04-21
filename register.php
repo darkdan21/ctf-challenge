@@ -1,49 +1,55 @@
 <?php
-
+include_once("session.php");
+include_once("header.php");
 
 if(isset($_GET['state']) && $_GET['state'] == "success")
 {
     echo "Registered succesfully, please check your emails for the registration key.<br>
-<br>
-ERROR: Email not sent, please go to the <strong><a href='activation.php?username=".$_GET['username']."'>activation</a></strong> page and activate your account manually.";
+        <br>
+        ERROR: Email not sent, please go to the <strong><a href='activation.php?username=".$_GET['username']."'>activation</a></strong> page and activate your account manually.";
 } else {
 
-    $namerror = "";
-    $emailerror = "";
-    $passworderror = "";
-    $genericerror = "";
-    if(isset($_GET['state']) && ($_GET['state'] == "fail")){
-        if(isset($_GET['status'])){
-            $status = $_GET['status'];
+    if($session->valid == 1)
+    {
+        echo "<br>You are already logged in!";
+    } else {
 
-            if($status == 0){
-                $genericerror = "An error occurred, please try again later.";
-                
-                if($_GET['username'] == ""){
-                    $namerror = "Please enter a username.";
-                    $genericerror = "";
+        $namerror = "";
+        $emailerror = "";
+        $passworderror = "";
+        $genericerror = "";
+        if(isset($_GET['state']) && ($_GET['state'] == "fail")){
+            if(isset($_GET['status'])){
+                $status = $_GET['status'];
+
+                if($status == 0){
+                    $genericerror = "An error occurred, please try again later.";
+
+                    if($_GET['username'] == ""){
+                        $namerror = "Please enter a username.";
+                        $genericerror = "";
+                    }
+                    if($_GET['email'] == ""){
+                        $emailerror = "Please enter an email.";
+                        $genericerror = "";
+                    }
+
                 }
-                if($_GET['email'] == ""){
-                    $emailerror = "Please enter an email.";
-                    $genericerror = "";
+
+                if(($status-4)>=0){
+                    $namerror = "This username was already taken";
+                    $status-=4;
                 }
-
-            }
-
-            if(($status-4)>=0){
-                $namerror = "This username was already taken";
-                $status-=4;
-            }
-            if(($status-2)>=0){
-                $emailerror = "This email was already taken";
-                $status-=2;
-            }
-            if(($status-1)>=0){
-                $passworderror = "The passwords do not match";
-                $status-=1;
+                if(($status-2)>=0){
+                    $emailerror = "This email was already taken";
+                    $status-=2;
+                }
+                if(($status-1)>=0){
+                    $passworderror = "The passwords do not match";
+                    $status-=1;
+                }
             }
         }
-    }
 
 ?>
 <br>Registration<br><br>
@@ -56,6 +62,7 @@ Username: <input type="text" name="username" <?php if(isset($_GET['username'])){
     <input type="submit" value="Submit">
 </form>
 <?php
-    echo $genericerror;
+        echo $genericerror;
+    }
 }
 ?>

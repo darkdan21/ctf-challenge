@@ -66,6 +66,7 @@ CREATE TABLE messages (
     id int NOT NULL AUTO_INCREMENT,
     toid int NOT NULL,
     fromid int NOT NULL,
+    seen int NOT NULL,
     date VARCHAR(32) NOT NULL,
     content TEXT NOT NULL,
     PRIMARY KEY (id)
@@ -77,3 +78,4 @@ CREATE TABLE loginnonces (
     nonce int NOT NULL,
     PRIMARY KEY (id)
 );
+

@@ -26,8 +26,7 @@ class session{
                 //if it is not correct, unset cookies
                 $this->valid=False;
 
-                $this->loggedout=True; //so we know when something has gone wrong and they've been logged out
-
+               
                 $this->delete_sessions();
             }
         } else {
@@ -71,6 +70,8 @@ class session{
     function delete_sessions(){
         setcookie("username", "", time()-3600, "/");
         setcookie("token", "", time()-3600, "/");
+        $this->loggedout=True; //so we know when something has gone wrong and they've been logged out
+
     }
 
     function make_tokens($user){
