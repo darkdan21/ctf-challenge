@@ -15,9 +15,9 @@ $GLOBALS['error'] = "";
 if(isset($_POST['username']) && isset($_POST['hashedpass'])){
 
     if($result == 1){
-        echo "<br>You have logged in sucessfully.";
+        echo "<br><div class='label'>You have been logged in sucessfully</div>";
     } else {
-        $GLOBALS['error'] = "Login unsuccessful, please try again.";
+        $GLOBALS['error'] = "<div class='error'>Login unsuccessful, please try again.</div>";
         loginform($session);
     }
 } else{
@@ -50,9 +50,11 @@ function loginform($session){
         }
         </script>
 
+<br><div class="label">Login</div>
+<br><br>
 <form>
-Username: <input type="text" id="username" oninput="usernamechange()" <?php if(isset($_POST['username'])){echo "value=".$_POST['username'];}?>> <br>
-Password: <input type="password" id="password" oninput="passwordchange()"><br>
+Username: <input type="text" id="username" oninput="usernamechange()" <?php if(isset($_POST['username'])){echo "value=".$_POST['username'];}?>> <br><br>
+Password: <input type="password" id="password" oninput="passwordchange()">
 <input type="text" id="noncebox" hidden=true>
 </form>
 <form method="post">

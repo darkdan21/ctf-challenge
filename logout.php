@@ -7,7 +7,6 @@ if($session->valid == true){
 
 include_once("header.php");
 if($session->valid == false){
-    echo "<br>you have been logged out";
+    echo "<br><div class='label'>You have been logged out</div>";
 }
-
 ?>

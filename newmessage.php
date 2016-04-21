@@ -11,11 +11,11 @@ if(isset($_POST['to'])&&isset($_POST['message'])){
     $from = $session->get_user_id();
 
     if($to == -1){
-        $personerror = "This username is not registered";
+        $personerror = "<div class='error'>This username is not registered</div>";
         messageform($personerror); 
     } else{
         $message->send_message($to,$from,$_POST['message']);
-        echo "<br>Message sent sucessfully";
+        echo "<br><div class='label'>Message sent sucessfully</div>";
     }
 } else {
     messageform($personerror);
@@ -24,7 +24,7 @@ if(isset($_POST['to'])&&isset($_POST['message'])){
 function messageform($personerror){
 ?>
 <form  method="post">
-To: <input type="text" name="to"
+<div class='label'>To:</div> <br><input type="text" name="to" class='foruminput'
 <?php if(isset($_POST['to'])){echo "value=".$_POST['to'];} ?>
 >
 <?php echo $personerror; ?>

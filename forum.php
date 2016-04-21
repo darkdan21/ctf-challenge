@@ -19,17 +19,17 @@ if($forum->name==""){
 $thread = new thread();
 $threadids = $forum->list_threads();
 if($threadids[0]==""){
-    echo "<br>No threads found.<br>";
+    echo "<br><div class='label'>No threads found.</div><br>";
 }else{
-    echo "<br>Threads in this forum:<br>";
+    echo "<br><div class='label'>Threads in this forum:</div><br>";
 
 
     foreach($threadids as $threadid){
         $thread->get_thread($threadid);
 
-        echo "<a href=thread.php?thread=$threadid>$thread->threadname</a><br>";
+        echo "<a class='forumlink' href=thread.php?thread=$threadid>$thread->threadname</a><br><br>";
     }
 }
-echo "<a href=thread.php?new=".$_GET['forum'].">New Thread</a>";
+echo "<a class='forumlink new' href=thread.php?new=".$_GET['forum'].">New Thread</a>";
 
 ?>

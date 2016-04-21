@@ -9,7 +9,7 @@ if(isset($_GET['new'])){
     if(isset($_POST['name']) && isset($_POST['post']) && $session->valid==1){
         if($_POST['name'] == "")
         {
-            $posterror = "Thread name cannot be blank";
+            $posterror = "<div class='error'>Thread name cannot be blank</div>";
             new_thread($posterror);
             die();
         }
@@ -17,7 +17,7 @@ if(isset($_GET['new'])){
 
         $id = $thread->new_thread($_GET['new'],$_POST['name'],$session->get_user_id(),$_POST['post']);
 
-        echo "<br><br>Posted succesfully! Goto <a href='thread.php?thread=$id'>thread.</a>";
+        echo "<br><br><div class='label'>Posted successfully! Goto <a href='thread.php?thread=$id'>thread</a></div>";
         die();
 
     }
@@ -41,14 +41,15 @@ if($thread->threadname == ""){
     echo "<br>Thread not found<br>";
     die();
 }
-echo "<br>Thread: ".$thread->threadname." - <a href=forum.php?forum=".$thread->forumid.">".((new forum())->get_forum($thread->forumid))->name."</a><br>";
+echo "<div class='label'><br>Thread: ".$thread->threadname." - <a href=forum.php?forum=".$thread->forumid.">".((new forum())->get_forum($thread->forumid))->name."</a></div><br><br><br>";
 
 $post = new post();
 $postids = $thread->list_posts();
 foreach($postids as $postid){
     $post->get_post($postid);
-    echo "<br>".get_user_from_id($post->userid)." - ".$post->date;
-    echo "<br>".$post->content;
+    echo "<div class='post'><div class='postheader'>".get_user_from_id($post->userid)." - ".$post->date;
+    echo "</div><br>".$post->content;
+    echo "</div><br>";
 
 }
 
@@ -57,7 +58,7 @@ if($session->valid==1){
 ?>
 <form action="thread.php?thread=<?php echo $_GET['thread']; ?>" method="post">
 <textarea name="post" rows=10 cols=40></textarea><br>
-<input type="submit" name="submit" value="Submit">
+<input type="submit" name="submit"class="foruminput" value="Submit">
 </form>
 
 <?php
@@ -68,9 +69,9 @@ function new_thread($posterror){
 ?>
 <br><br>
 <form action="thread.php?new=<?php echo $_GET['new']; ?>" method="post">
-Thread name: <input type="text" name="name" <?php if(isset($_POST['name'])){echo "value=".$_POST['name'];} ?>><?php echo $posterror; ?><br>
+<div class="label">Thread name:</div><br> <br><input type="text" class="foruminput" name="name" <?php if(isset($_POST['name'])){echo "value=".$_POST['name'];} ?>><?php echo $posterror; ?><br><br>
 <textarea name="post" rows=10 cols=40><?php if(isset($_POST['post'])){echo $_POST['post'];} ?></textarea><br>
-<input type="submit" name="submit" value="Submit">
+<input type="submit" class="foruminput" name="submit" value="Submit">
 </form>
 
 <?php

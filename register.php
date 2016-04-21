@@ -4,9 +4,9 @@ include_once("header.php");
 
 if(isset($_GET['state']) && $_GET['state'] == "success")
 {
-    echo "Registered succesfully, please check your emails for the registration key.<br>
+    echo "<div class='label'>Registered succesfully, please check your emails for the registration key.<br>
         <br>
-        ERROR: Email not sent, please go to the <strong><a href='activation.php?username=".$_GET['username']."'>activation</a></strong> page and activate your account manually.";
+        ERROR: Email not sent, please go to the <strong><a href='activation.php?username=".$_GET['username']."'>activation</a></strong> page and activate your account manually.</div>";
 } else {
 
     if($session->valid == 1)
@@ -23,42 +23,42 @@ if(isset($_GET['state']) && $_GET['state'] == "success")
                 $status = $_GET['status'];
 
                 if($status == 0){
-                    $genericerror = "An error occurred, please try again later.";
+                    $genericerror = "<div class='error'>An error occurred, please try again later.</div>";
 
                     if($_GET['username'] == ""){
-                        $namerror = "Please enter a username.";
+                        $namerror = "<div class='error'>Please enter a username.</div>";
                         $genericerror = "";
                     }
                     if($_GET['email'] == ""){
-                        $emailerror = "Please enter an email.";
+                        $emailerror = "<div class='error'>Please enter an email.</div>";
                         $genericerror = "";
                     }
 
                 }
 
                 if(($status-4)>=0){
-                    $namerror = "This username was already taken";
+                    $namerror = "<div class='error'>This username was already taken</div>";
                     $status-=4;
                 }
                 if(($status-2)>=0){
-                    $emailerror = "This email was already taken";
+                    $emailerror = "<div class='error'>This email was already taken</div>";
                     $status-=2;
                 }
                 if(($status-1)>=0){
-                    $passworderror = "The passwords do not match";
+                    $passworderror = "<div class='error'>The passwords do not match</div>";
                     $status-=1;
                 }
             }
         }
 
 ?>
-<br>Registration<br><br>
+<br><div class='label'>Registration</div><br><br>
 
 <form action="registration_handler.php" method="post">
-Username: <input type="text" name="username" <?php if(isset($_GET['username'])){ echo "value=".$_GET['username'];} ?> ><?php echo $namerror; ?> <br>
-    Email: <input type="text" name="email" <?php if(isset($_GET['email'])){ echo "value=".$_GET['email'];} ?> ><?php echo $emailerror; ?> <br> 
-    Password: <input type="password" name="pass1"><?php echo $passworderror; ?> <br>
-    Repeat Password: <input type="password" name="pass2"><br>
+Username: <input type="text" name="username" <?php if(isset($_GET['username'])){ echo "value=".$_GET['username'];} ?> ><?php echo $namerror; ?> <br><br>
+    Email: <input type="text" name="email" <?php if(isset($_GET['email'])){ echo "value=".$_GET['email'];} ?> ><?php echo $emailerror; ?> <br><br> 
+    Password: <input type="password" name="pass1"><?php echo $passworderror; ?> <br><br>
+Repeat Password: <input type="password" name="pass2"><br><br>
     <input type="submit" value="Submit">
 </form>
 <?php

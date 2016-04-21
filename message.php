@@ -13,19 +13,19 @@ if($messageid == $userid && $session->valid==1)
     if($_GET['action'] == "read")
     {
         $mail->seen();
-        echo "<br>To: $mail->touser";
+        echo "<br><div class='post'><div class='postheader'>To: $mail->touser";
         echo "<br>From: $mail->fromuser";
-        echo "<br>Date: $mail->date";
-        echo "<br><br>$mail->content";
+        echo "<br>Date: $mail->date</div>";
+        echo "<br>$mail->content<br><br></div>";
     }
     if($_GET['action'] == "reply"){
         if(isset($_POST['message'])){
             $mail->reply($_POST['message']);
-            echo "<br>Message sent successfully";
+            echo "<br><div class='label'>Message sent successfully</div>";
         } else {
             $mail->seen();
-            echo "<br>To: $mail->fromuser";
-            echo "<br>From: $mail->touser";
+            echo "<div class='label'>To: $mail->fromuser";
+            echo "<br>From: $mail->touser</div><br><br><br>";
         
 ?>
 

@@ -16,17 +16,17 @@ if(isset($_GET['username']) && isset($_GET['token'])){
 
 
     if($userstatus != 1){
-        $GLOBALS['usererror'] = "That username cannot be activated.";
+        $GLOBALS['usererror'] = "<div class='error'>That username cannot be activated.</div>";
     } else if($tokenstatus != 1){
-        $GLOBALS['tokenerror'] = "This token is incorrect.";
+        $GLOBALS['tokenerror'] = "<div class='error'>This token is incorrect.</div>";
     }
 
     if($tokenstatus == 1 && $userstatus == 1 && $status == 0){
-        $GLOBALS['generalerror'] = "An error occurred, please try again later.";
+        $GLOBALS['generalerror'] = "<div class='error'>An error occurred, please try again later.</div>";
     }
 
     if($status+$userstatus+$tokenstatus == 3){
-        echo "Activation successful!";
+        echo "<div class='label'>Activation successful!";
     } else {
         activation_form($session);
     }
@@ -39,11 +39,11 @@ function activation_form($session){
     if($session->valid){
         echo "<br>You are already logged in!";
     }else{
-?>
-
+?><br>
+<div class='label'>Activation</div><br><br>
 <form method ="get">
-Username: <input type="text" name="username" <?php if(isset($_GET['username'])){ echo "value=".$_GET['username'];}?> > <?php echo  $GLOBALS['usererror']; ?><br>
-Token: <input type="text" name="token" <?php if(isset($_GET['token'])){ echo 'value="'.$_GET['token'].'"';}?> ><?php echo  $GLOBALS['tokenerror']; ?><br>
+Username: <input type="text" name="username" <?php if(isset($_GET['username'])){ echo "value=".$_GET['username'];}?> > <?php echo  $GLOBALS['usererror']; ?><br><br>
+Token: <input type="text" name="token" <?php if(isset($_GET['token'])){ echo 'value="'.$_GET['token'].'"';}?> ><?php echo  $GLOBALS['tokenerror']; ?><br><br>
 
 <input type="submit">
 </form>

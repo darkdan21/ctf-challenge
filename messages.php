@@ -5,19 +5,11 @@ include_once("scripts/forumscripts/mail.php");
 
 ?>
 
-<style>
-table,th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-
-}
-</style>
-
 <?php
 
 echo "<br>";
 if($session->valid == 1){
-    echo "<a href='newmessage.php'>New Message</a><br>";
+    echo "<a class='button' style='width:120px'  href='newmessage.php'>New Message</a><br>";
     $mailcheck = new mailcheck(get_id_from_user($session->username));
 
     $mailcount = $mailcheck->message_count();
@@ -25,17 +17,17 @@ if($session->valid == 1){
 
     if($mailcount>0){
         if($unreadcount>0){
-            echo "You have $unreadcount new messages<br>";
+            echo "<div class='label'>You have $unreadcount new messages<br></div>";
         }
-        echo "Recieved Messages:";
+        echo "<br><div class='label'>Recieved Messages:</div><br><br>";
         get_messages($mailcheck);
 
     }else{
-        echo "You have no messages!";
+        echo "<div class='label'>You have no messages!</div>";
     }
 
     if($mailcheck->sent_count()>0){
-        echo "Sent Messages:";
+        echo "<br><div class='label'>Sent Messages:</div><br><br>";
         output_sent_messages($mailcheck->sent());
     }
 
@@ -52,40 +44,40 @@ function get_messages($mailcheck){
 
 }
 function output_sent_messages($messages){
-    echo "<table style='width:90%'>";
+    echo "<div class='messages'>";
     $message = new message();
     foreach($messages as $messageid){
-        $message->get_message($messageid);
-        echo "<tr>";
-        item($message->touser);
-        item((($message->seen == 1) ? "Read" : "Unread"));
-        item($message->date);
+        $message->get_message($messageid,"");
+        echo "<div class='message'>";
+        item($message->touser,"");
+        item((($message->seen == 1) ? "Read" : "Unread"),"small");
+        item($message->date,"");
         $content = htmlentities((strlen($message->content)>20)?substr($message->content,0,20)."...":$message->content);
-        item("$content");
+        item("$content","");
 
-        echo "</tr>";
+        echo "</div>";
     }
-    echo "</table>";
+    echo "</div>";
 
 }
 function output_messages($messages){
-    echo "<table style='width:90%'>";
+    echo "<div class='messages'>";
     $message = new message();
     foreach($messages as $messageid){
         $message->get_message($messageid);
-        echo "<tr>";
-        item($message->fromuser);
-        item((($message->seen == 1) ? "Read" : "Unread"));
-        item($message->date);
+        echo "<div class='message'>";
+        item($message->fromuser,"");
+        item((($message->seen == 1) ? "Read" : "Unread"),"small");
+        item($message->date,"");
         $content = htmlentities((strlen($message->content)>20)?substr($message->content,0,20)."...":$message->content);
-        item("<a href='message.php?action=read&id=$message->id'>$content</a>");
-        item("<a href='message.php?action=reply&id=$message->id'>reply</a>");
+        item("<a href='message.php?action=read&id=$message->id'>$content</a>","");
+        item("<a href='message.php?action=reply&id=$message->id'>reply</a>","small");
 
-        echo "</tr>";
+        echo "</div>";
     }
-    echo "</table>";
+    echo "</div>";
 }
-function item($string){
-    echo "<td>$string</td>";
+function item($string, $class){
+    echo "<div class='field $class'>$string</div>";
 }
 ?>
