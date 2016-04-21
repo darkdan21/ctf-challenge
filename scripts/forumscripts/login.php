@@ -24,8 +24,13 @@ class login{
         $query = "SELECT nonce FROM loginnonces WHERE username='$this->username'";
         $result = $this->link->query($query) or die($this->link->error);
 
-        return $result->fetch_array()[0];
+        $nonce = $result->fetch_array()[0];
 
+        if($result->num_rows == 0){
+            return rand(0,999);
+        } else {
+            return $nonce;
+        }
     }
 
     function login($password){
@@ -37,13 +42,11 @@ class login{
 
         $correctpassword = $result->fetch_array()[0];
 
-        $correcthash = $this->shuffle(md5($correctpassword));
+        $md5d = md5($correctpassword.($this->get_nonce()));
 
-        echo md5($correctpassword);
-        echo ":";
-        echo $this->antihash($correcthash);
+        $correcthash = $this->shuffle($md5d);
 
-        if($password == $correcthash){
+        if(strcmp($password,$correcthash)==0){
             return true;
         }
         return false;
@@ -53,9 +56,11 @@ class login{
         $password = $correctpassword;
 
 
+
         $password = strrev($password); //reverse the md5
 
         $password = substr($password,16,16).substr($password,0,16);
+
 
         $password = (hexdec(substr($password,24,8))+10101).",".
             (hexdec(substr($password,16,8))+10101).",".
@@ -76,9 +81,9 @@ class login{
 
 
         $password = dechex($password[3]-34).dechex($password[2]-10101).dechex($password[1]-10101).dechex($password[0]-10101);
-        
+
         $password = substr($password,16,16).substr($password,0,16);
-        
+
         $password = strrev($password);
         return $password;
 
@@ -86,11 +91,4 @@ class login{
 
 }
 
-$login = new login("dan_j@live.co.ukasdasdfs");
-for($i = 0; $i<64; $i++)
-{
-    $login->nonce();
-    echo "<br>";
-    $login->login("hiya");
-}
 ?>
