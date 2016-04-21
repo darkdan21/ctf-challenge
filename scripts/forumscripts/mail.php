@@ -61,6 +61,46 @@ class message{
 
 
 }
+
+
+class mailcheck{
+    public $id;
+
+    function __construct($id){
+        $this->id = escape($id);
+    }
+
+    function unread(){
+        $query = "SELECT group_concat(id) from messages WHERE toid='$this->id' AND seen='0'";
+
+        $result = do_query($query);
+        $result = explode(",",$result->fetch_array()[0]);
+        return $result;
+    }
+
+    function get_all(){
+        $query = "SELECT group_concat(id) from messages WHERE toid='$this->id'";
+
+        $result = do_query($query);
+        $result = explode(",",$result->fetch_array()[0]);
+        return $result;
+    }
+
+    function get_unread(){
+
+        $unread = $this->unread;
+
+        if(count($unread == 0)){
+            return -1;
+        }
+
+        $mail = new mail();
+        $mail->get_message($unread[0]);
+
+        return $mail;
+    }
+}
+
 function get_user_from_id($id){
     $id = escape($id);
     $query = "SELECT username FROM users WHERE id='$id'";
