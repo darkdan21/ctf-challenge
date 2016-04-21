@@ -90,9 +90,7 @@ class mailcheck{
 
         $unread = $this->unread();
 
-        var_dump($unread);
 
-        echo "<br>";
 
         if(count($unread)==0){
             return -1;
