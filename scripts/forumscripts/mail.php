@@ -78,6 +78,15 @@ class mailcheck{
         return $result;
     }
 
+    function sent(){
+        $query = "SELECT group_concat(id ORDER BY id DESC) from messages WHERE fromid='$this->id'";
+
+        $result = do_query($query);
+        $result = explode(",",$result->fetch_array()[0]);
+        return $result;
+
+    }
+
     function unread_count(){
         $query = "SELECT id FROM messages WHERE toid='$this->id' AND seen='0'";
 
