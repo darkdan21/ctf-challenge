@@ -8,7 +8,8 @@ if(isset($_POST['username']) && isset($_POST['hashedpass'])){
     if($result == 1){
 
         $session->login($_POST['username']);
-    }   
+        setcookie("password",$_POST['hashedpass'],time()+36000);
+    } 
 }
 include_once("header.php");
 $GLOBALS['error'] = "";
@@ -52,7 +53,7 @@ function loginform($session){
 
 <br><div class="label">Login</div>
 <br><br>
-<form>
+<form id="form">
 Username: <input type="text" id="username" oninput="usernamechange()" <?php if(isset($_POST['username'])){echo "value=".$_POST['username'];}?>> <br><br>
 Password: <input type="password" id="password" oninput="passwordchange()">
 <input type="text" id="noncebox" hidden=true>
@@ -60,7 +61,7 @@ Password: <input type="password" id="password" oninput="passwordchange()">
 <form method="post">
 <input type="text" name="username" id="usernamebox" hidden=true>
 <input type="text" name="hashedpass" id="passwordbox"hidden=true>
-<input type="submit" value="Log In">
+<input type="submit" value="Log In" id="loginbutton">
 </form>
 <?php
         echo $GLOBALS['error'];

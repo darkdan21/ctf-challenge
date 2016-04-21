@@ -1,6 +1,5 @@
 <?php
 
-include_once("scripts/sessions/management.php");
 
 class registration {
 
