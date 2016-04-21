@@ -88,13 +88,17 @@ class mailcheck{
 
     function get_unread(){
 
-        $unread = $this->unread;
+        $unread = $this->unread();
 
-        if(count($unread == 0)){
+        var_dump($unread);
+
+        echo "<br>";
+
+        if(count($unread)==0){
             return -1;
         }
 
-        $mail = new mail();
+        $mail = new message();
         $mail->get_message($unread[0]);
 
         return $mail;
