@@ -17,11 +17,11 @@ table,th, td {
 
 echo "<br>";
 if($session->valid == 1){
-
+    echo "<a href='newmessage.php'>New Message</a><br>";
     $mailcheck = new mailcheck(get_id_from_user($session->username));
 
-    $mailcount = count($mailcheck->read());
-    $unreadcount = count($mailcheck->unread());
+    $mailcount = $mailcheck->read_count();
+    $unreadcount = $mailcheck->unread_count();
 
     if($mailcount>0){
         if($unreadcount>0){
@@ -53,7 +53,10 @@ function output_messages($messages){
         item($message->touser);
         item((($message->seen == 1) ? "Read" : "Unread"));
         item($message->date);
-        item($message->content);
+        $content = htmlentities((strlen($message->content)>20)?substr($message->content,0,20)."...":$message->content);
+        item("<a href='message.php?action=read&id=$message->id'>$content</a>");
+        item("<a href='message.php?action=reply&id=$message->id'>reply</a>");
+
         echo "</tr>";
     }
     echo "</table>";

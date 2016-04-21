@@ -8,10 +8,10 @@ class session{
     var $token;
     var $link;
     var $id;
-    
+
     function __construct(){
         $this->link = new mysqli('localhost','root','cheese12345','sessions');
-   
+
         if(isset($_COOKIE['username'])&&isset($_COOKIE['token'])){
             //check to see if the session is set
             $this->username = $this->link->real_escape_string($_COOKIE['username']);
@@ -26,12 +26,28 @@ class session{
                 //if it is not correct, unset cookies
                 $this->valid=False;
 
-               
+
                 $this->delete_sessions();
             }
         } else {
             $this->delete_sessions();
         }
+    }
+
+    function get_user_id(){
+        $link2 = new mysqli("localhost", "root", "cheese12345", "forum");
+
+        $query = "SELECT id FROM users WHERE username='$this->username'";
+        $result = $link2->query($query) or die($GLOBALS['link']->error);
+
+
+        if($result->num_rows == 0)
+        {
+            return -1;
+        }
+        return $result->fetch_array()[0];
+
+
     }
 
     function verify_session(){
@@ -78,7 +94,7 @@ class session{
         $this->username=$this->link->real_escape_string($user);
         $random = random_int(100000,999999);
         $this->token=$this->gen_token($this->username,$random);
-   }
+    }
 
     function login($user){
         $this->make_tokens($user);
@@ -136,7 +152,7 @@ class session{
         $item=$this->link->real_escape_string($item);
 
         $query = "DELETE FROM session_variables WHERE userid='$this->id' AND name='$item'";
-        
+
         $result = $this->link->query($query) or die($this->link->error);
 
     }

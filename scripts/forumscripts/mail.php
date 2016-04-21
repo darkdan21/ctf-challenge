@@ -31,7 +31,7 @@ class message{
     function send_message($toid,$fromid,$content){
         $this->toid=escape($toid);
         $this->fromid=escape($fromid);
-        $this->content=$content;
+        $this->content=mysql_escape($content);
 
         $this->fromuser=get_user_from_id($fromid);
         $this->touser=get_user_from_id($toid);
@@ -76,6 +76,32 @@ class mailcheck{
         $result = do_query($query);
         $result = explode(",",$result->fetch_array()[0]);
         return $result;
+    }
+
+    function unread_count(){
+        $query = "SELECT id FROM messages WHERE toid='$this->id' AND seen='0'";
+
+        $result = do_query($query);
+
+        return $result->num_rows;
+    }
+
+    function read_count(){
+        $query = "SELECT id FROM messages WHERE toid='$this->id' AND seen='1'";
+
+        $result = do_query($query);
+
+        return $result->num_rows;
+
+    }
+
+    function message_count(){
+        $query = "SELECT id FROM messages WHERE toid='$this->id'";
+
+        $result = do_query($query);
+
+        return $result->num_rows;
+
     }
 
     function read(){
@@ -146,6 +172,9 @@ function do_query($query){
 
 function escape($string){
     return htmlentities($GLOBALS['link']->real_escape_string($string));
+}
+function mysql_escape($string){
+    return $GLOBALS['link']->real_escape_string($string);
 }
 
 function get_last_id(){
