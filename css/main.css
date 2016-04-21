@@ -152,3 +152,22 @@ textarea{
 .new:hover{
     background-color: #72d48a;
 }
+
+.replybutton{
+    display: inline-block;
+    position:absolute;
+    top: 150px;
+    z-index:5;
+    left: 420px;
+    width: 40px;
+    background-color: #add8e6;
+    margin: 5px;
+    vertical-align:middle;
+    padding: 5px;
+    border-radius: 10px;
+    border: solid 1px white;
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+
+}

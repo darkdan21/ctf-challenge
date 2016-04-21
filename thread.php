@@ -4,9 +4,9 @@ include_once("header.php");
 include_once("scripts/forumscripts/main.php");
 $posterror = "";
 
-if(isset($_GET['new'])){
+if(isset($_GET['new']) && $session->valid==1){
 
-    if(isset($_POST['name']) && isset($_POST['post']) && $session->valid==1){
+    if(isset($_POST['name']) && isset($_POST['post'])){
         if($_POST['name'] == "")
         {
             $posterror = "<div class='error'>Thread name cannot be blank</div>";
@@ -33,7 +33,9 @@ if(isset($_GET['thread']) && isset($_POST['post'])){
     }
 }
 
-
+if(!isset($_GET['thread'])){
+    die();
+}
 $thread = new thread();
 
 $thread->get_thread($_GET['thread']);

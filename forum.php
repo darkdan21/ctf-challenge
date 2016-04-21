@@ -30,6 +30,9 @@ if($threadids[0]==""){
         echo "<a class='forumlink' href=thread.php?thread=$threadid>$thread->threadname</a><br><br>";
     }
 }
-echo "<a class='forumlink new' href=thread.php?new=".$_GET['forum'].">New Thread</a>";
+if($session->valid == 1){
+
+    echo "<a class='forumlink new' href=thread.php?new=".$_GET['forum'].">New Thread</a>";
+}
 
 ?>
