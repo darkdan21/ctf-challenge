@@ -1,0 +1,11 @@
+#!/bin/bash
+cmd="phantomjs --ignore-ssl-errors=true --local-to-remote-url-access=true --web-security=false --ssl-protocol=any xss-bot.js"
+
+eval "${cmd}" &disown;
+
+perl -e "select(undef,undef,undef,0.5);"
+cmd2="phantomjs --ignore-ssl-errors=true --local-to-remote-url-access=true --web-security=false --ssl-protocol=any clean-up-bot.js"
+
+eval "${cmd2}" &disown;
+
+exit 0;
