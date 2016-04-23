@@ -1,5 +1,6 @@
 <?php
 
+die();
 
 include_once("../sessions/management.php");
 include_once("main.php");

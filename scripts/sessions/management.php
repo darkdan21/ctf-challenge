@@ -17,6 +17,7 @@ class session{
             $this->username = $this->link->real_escape_string($_COOKIE['username']);
             $this->token = $this->link->real_escape_string($_COOKIE['token']);
 
+
             if($this->verify_session()){
                 //verify the session is correct
                 $this->valid=True;

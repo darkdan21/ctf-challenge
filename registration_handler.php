@@ -1,4 +1,5 @@
 <?php
+include_once("session.php");
 include_once("scripts/forumscripts/registration.php");
 include_once("scripts/forumscripts/mail.php");
 

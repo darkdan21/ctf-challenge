@@ -2,26 +2,31 @@
 include_once("session.php");
 include_once("header.php");
 
-$userid = $session->get_user_id();
-
-$mailcheck = new mailcheck($userid);
-
-$mail = $mailcheck->get_unread();
-
-$messageid = $mail->toid;
-
-if($messageid == $userid && $session->valid==1)
+if($session->valid==1)
 {
+    $userid = $session->get_user_id();
 
-        echo "<a class='replybutton' href='message.php?action=reply&id=".$messageid."'> Reply</a><br>";
+    $mailcheck = new mailcheck($userid);
+
+    $mail = $mailcheck->unread();
+
+    $unread = new message();
+
+    foreach($mail as $message){
+
+        $unread->get_message($message);
+        if($unread->toid == $userid)
+        {
 
 
-        $mail->seen();
-        echo "<br><div class='post'><div class='postheader'>To: $mail->touser";
-        echo "<br>From: $mail->fromuser";
-        echo "<br>Date: $mail->date</div>";
-        echo "<br>$mail->content<br><br></div>";
+            $unread->seen();
+            echo "<br><div class='post'><div class='postheader'>To: $unread->touser";
+            echo "<br>From: $unread->fromuser";
+            echo "<br>Date: $unread->date</div>";
+            echo "<br>$unread->content<br><br></div>";
 
 
+        }
     }
+}
 ?>

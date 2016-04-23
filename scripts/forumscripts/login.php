@@ -36,6 +36,14 @@ class login{
     function login($password){
         $this->password = htmlentities($this->link->real_escape_string($password));
 
+        $query = "SELECT active FROM users WHERE username = '$this->username'";
+        
+        $result = $this->link->query($query) or die($this->link->error);
+
+        if($result->fetch_array()[0] != '1'){
+            return false;
+        }
+
         $query = "SELECT password FROM users WHERE username = '$this->username'";
 
         $result = $this->link->query($query) or die($this->link->error);
